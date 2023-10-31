@@ -1,0 +1,145 @@
+.markdown-preview {
+  color: var(--text-color);
+  white-space: pre-wrap;
+
+  blockquote {
+    position: relative;
+    padding: 0 11px;
+    margin-left: 0;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      height: 100%;
+      width: 3px;
+      border-radius: 2px;
+      background-color: var(--color-bbb);
+    }
+  }
+
+  code {
+    font-size: 14px;
+    padding: 0 6px;
+    line-height: 20px;
+    border-radius: 6px;
+    white-space: pre-wrap;
+    background-color: var(--color-ede);
+    border: 1px solid var(--color-bbb);
+
+    &.line {
+      color: #9636b3;
+      display: inline-block;
+
+      .theme-dark & {
+        color: #c678dd;
+      }
+    }
+  }
+
+  .hlcode {
+    margin-top: 6px;
+    max-width: 90%;
+
+    code {
+      padding: 4px 8px;
+      display: block;
+      line-height: 1.5;
+      font-family: "Monaco", "Consolas", "Ubuntu Mono", "PingFang SC",
+        "Microsoft YaHei", monospace;
+    }
+  }
+
+  hr {
+    margin: 0;
+    padding: 12px 0;
+    background-clip: content-box;
+    background-color: var(--text-description-color);
+    height: 25px;
+    border-width: 0;
+    border-style: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    box-sizing: border-box;
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  del {
+    text-decoration: line-through;
+  }
+
+  ins {
+    text-decoration: underline;
+  }
+
+  .emoji {
+    display: inline-block;
+    object-fit: contain;
+    width: 20px;
+    height: 20px;
+    vertical-align: sub;
+  }
+
+  .spoiler {
+    padding: 0 4px;
+    background-color: var(--color-e5e);
+    border-radius: 4px;
+
+    &.hide {
+      cursor: pointer;
+      background-color: var(--color-bbb);
+
+      &:hover {
+        opacity: 0.8;
+      }
+
+      &>span {
+        opacity: 0;
+      }
+    }
+
+    .event-none {
+      pointer-events: none;
+    }
+  }
+
+  .text-link {
+    &:visited {
+      color: var(--color-link);
+    }
+
+    color: var(--color-link);
+  }
+}
+
+.markdown-preview.line {
+  white-space: nowrap;
+  line-height: 22px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  code {
+    white-space: nowrap;
+    font-size: 12px;
+  }
+
+  .spoiler {
+    &.hide:hover {
+      opacity: 1;
+    }
+  }
+
+  blockquote {
+    display: inline;
+
+    &::before {
+      top: 50%;
+      transform: translateY(-50%);
+      line-height: 16px;
+    }
+  }
+}

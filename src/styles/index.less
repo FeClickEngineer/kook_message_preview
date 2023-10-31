@@ -1,0 +1,256 @@
+@import './highlight-theme.less';
+@import './kmarkdown.less';
+@import './theme-var.less';
+
+.card-message-preview {
+  color: var(--text-color);
+  white-space: pre-wrap;
+
+  .emoji {
+    display: inline-block;
+    object-fit: contain;
+    width: 20px;
+    height: 20px;
+  }
+
+  .kui-card {
+    margin-top: 2px;
+  }
+}
+
+.card-message-preview.line {
+  white-space: nowrap;
+  line-height: 22px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+@keyframes rotate {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.chuanyu-button {
+  position: relative;
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 1);
+  text-align: center;
+  outline: none;
+  border: 0 none;
+
+  &[disabled] {
+    cursor: not-allowed;
+  }
+
+  /*按钮大小*/
+  &.size-xs {
+    //小
+    font-size: 12px;
+    height: 24px;
+    min-width: 65px;
+    padding: 0 8px;
+  }
+
+  &.size-sm {
+    //中
+    font-size: 14px;
+    height: 30px;
+    padding: 0 10px;
+  }
+
+  &.size-md {
+    //大
+    min-width: 81px;
+    font-size: 14px;
+    height: 36px;
+    padding: 0 12px;
+  }
+
+  &.size-lg {
+    height: 42px;
+    font-size: 16px;
+    padding: 0 16px;
+  }
+
+  &.block-button {
+    width: 100%;
+    display: block;
+
+    &.size-md {
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    &.size-sm {
+      font-size: 16px;
+    }
+  }
+
+  /*按钮颜色样式*/
+  &.type-primary {
+    background-color: var(--color-primary);
+
+    &:hover {
+      background-color: var(--color-primary-hover);
+    }
+
+    &:active {
+      background-color: var(--color-primary-active);
+    }
+  }
+
+  &.type-appprimary {
+    background-color: var(--color-primary);
+
+    &:hover {
+      background-color: var(--color-primary-hover);
+    }
+
+    &:active {
+      background-color: var(--color-primary-active);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      background-color: var(--color-primary);
+    }
+  }
+
+  &.type-danger {
+    background-color: var(--color-error);
+
+    &:hover {
+      background-color: var(--color-error-hover);
+    }
+
+    &:active {
+      background-color: var(--color-error-active);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      background-color: var(--color-error);
+    }
+  }
+
+  &.type-success {
+    background-color: var(--color-success);
+
+    &:hover {
+      background-color: var(--color-success-hover);
+    }
+
+    &:active {
+      background-color: var(--color-success-active);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      background-color: var(--color-success);
+    }
+  }
+
+  &.type-simple {
+    background-color: transparent;
+    color: var(--text-tip-color);
+
+    // border: 1px solid #dddddd;
+    &:hover {
+      // border-color: rgba(0, 0, 0, 0.3);
+      background-color: rgba(187, 190, 196, 0.3);
+      color: var(--text-description-color);
+    }
+
+    &:active {
+      // background-color: rgba(238, 238, 238);
+      background-color: rgba(187, 190, 196, 0.5);
+      color: var(--text-description-color);
+    }
+
+    &:disabled {
+      cursor: default;
+      opacity: 0.5;
+      background-color: transparent;
+    }
+  }
+
+  &.type-default {
+    color: var(--text-description-color);
+    background-color: rgba(187, 190, 196, 0.15);
+
+    &:hover {
+      background-color: rgba(187, 190, 196, 0.3);
+    }
+
+    &:active {
+      background-color: rgba(187, 190, 196, 0.5);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+      background: rgba(187, 190, 196, 0.3);
+    }
+  }
+
+  &.type-simple-danger {
+    color: var(--color-error);
+    background-color: transparent;
+    border: 1px solid rgba(228, 75, 77);
+
+    &:hover {
+      border: 1px solid rgba(230, 93, 95);
+    }
+
+    &:active {
+      background-color: rgba(228, 75, 77, 0.1);
+    }
+  }
+
+  &.loading {
+    .loading-ico {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      display: block;
+      animation: rotate 1s linear infinite;
+    }
+
+    .button-text {
+      visibility: hidden;
+    }
+
+    .btn-loading-ico {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      display: block;
+      transform: translate(-50%, -50%);
+      height: 18px;
+      width: 18px;
+      line-height: 1;
+
+      .kaihei-loading-spin {
+        &:before {
+          border-color: #edeef0;
+        }
+
+        &:after {
+          border-top-color: rgba(153, 155, 161, 0.5);
+        }
+      }
+    }
+  }
+}
+
+.button-loading-spin {
+  .size-sm & {
+    transform-origin: 50%;
+    transform: scale(0.9);
+  }
+}

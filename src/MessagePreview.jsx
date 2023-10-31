@@ -10,7 +10,7 @@ function MessagePreview(props) {
   const { type = 'card', content = [], theme = 'light' } = props;
 
   const status = useExternal(
-    'https://static.kookapp.cn/app/assets/lib/markdown-parse.0.0.10.js',
+    'https://assets-1304063016.cos.ap-beijing.myqcloud.com/markdown-parse.0.0.10.js',
     {
       js: {
         async: true,

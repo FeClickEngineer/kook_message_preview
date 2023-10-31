@@ -8,7 +8,7 @@ hero:
     - text: 立即上手
       link: /preview
     - text: GitHub
-      link: /
+      link: https://github.com/laiyuzenb/kook_message_preview
 ---
 
 

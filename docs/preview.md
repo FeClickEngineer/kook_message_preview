@@ -1,5 +1,8 @@
-# KOOK 消息预览
-
+---
+  nav:
+    title: KOOK 消息预览
+    order: 0
+---
 
 ## 卡片消息基本使用
 这是一个简单的卡片消息例子
@@ -109,34 +112,13 @@ export default () => <MessagePreview type="card" content={content} />;
 ```
 
 
-## kmarkdown消息基本使用
+## KMarkDown消息基本使用
 这是一个简单的kmarkdown消息例子
 
 ```jsx
 import { MessagePreview } from '@kookapp/kook-message-preview';
 
-const content = `
-**KOOK**
-专属游戏玩家的*文字、语音和组队工具*
-(ins)安全免费(ins)，(ins)没有广告(ins)，(ins)低资源占用(ins)，(ins)高通话质量(ins)
-KOOK是最好的~~语音~~软件
-[KOOK](https://kookapp.cn)
-\`/help\`
-(spl)Talk is cheap.Make it happen.(spl)
-> Talk is cheap.
-Make it Happen.
-
----
-
-\`\`\`js
-function factorial(n, total) {
-    if (n === 1) return total;
-    return factorial(n - 1, n * total);
-}
-                
-factorial(5)
-\`\`\`
-`
+const content = `~~删除线~~`
  
 
 export default () => <MessagePreview type="kmd" content={content} />;
@@ -146,11 +128,8 @@ export default () => <MessagePreview type="kmd" content={content} />;
 
 | 属性名  | 描述                                                                                                  | 类型              | 默认值    |
 |---------|-----------------------------------------------------------------------------------------------------|-------------------|-----------|
-| type    | 消息类型  `'card'`(卡片消息)  `'kmd'`（kmarkdown消息）                                                  | `string`          | `'card'`  |
+| type    | 消息类型  `'card'`(卡片消息)  `'kmd'`（KMarkDown消息）                                                  | `string`          | `'card'`  |
 | theme   | 主题色 `'light' 或 'dark'`                                                                            | `string`          | `'light'` |
-| content | 消息内容：具体可查看[消息编辑器](https://tttt-www.dev.chuanyuapp.com/tools/message-builder.html#/card) | `string 或 array` | `[]`      |
+| content | 消息内容：具体可查看[消息编辑器](https://tttt-www.dev.chuanyuapp.com/tools/message-builder.html#/card) 或者 [卡片消息说明](/card_desc) 和 [KMarkDown消息说明](/kmd_desc)   | `string 或 array` | `[]`      |
 
 
-## content内字段说明
-
-TODO: 待补充

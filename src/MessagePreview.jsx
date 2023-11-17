@@ -7,10 +7,10 @@ import '@kaiheila/kui-lib/lib/index.css';
 import './styles/index.less';
 
 function MessagePreview(props) {
-  const { type = 'card', content = [], theme = 'light' } = props;
+  const { type = 'card', content = [], theme = 'light' ,external = ''} = props;
 
   const status = useExternal(
-    'https://assets-1304063016.cos.ap-beijing.myqcloud.com/markdown-parse.0.0.10.js',
+    external,
     {
       js: {
         async: true,
@@ -19,7 +19,7 @@ function MessagePreview(props) {
   );
 
   // markdown解析方法加载成功后再渲染组件
-  if (status !== 'ready') {
+  if (external && status !== 'ready') {
     return null;
   }
 

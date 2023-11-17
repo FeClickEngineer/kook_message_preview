@@ -4,6 +4,39 @@
     order: 0
 ---
 
+## 加载 wasm scripts
+
+有以下两种加载方式
+1. 下载 https://cdn.jsdelivr.net/npm/@kookapp/kook-message-preview@0.0.3/dist/markdown-parse.0.0.10.js 复制代码 至 html 文件中 的 script标签中
+```html
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    https://cdn.jsdelivr.net/npm/@kookapp/kook-message-preview@0.0.3/dist/markdown-parse.0.0.10.js 
+    里面的代码
+  </script>
+
+</body>
+
+</html>
+```
+2. 使用组件时 传入参数 `external=cdn地址`
+    例如以下代码示例都使用 external https://cdn.jsdelivr.net/npm/@kookapp/kook-message-preview@0.0.3/dist/markdown-parse.0.0.10.js
+```js
+import { MessagePreview } from '@kookapp/kook-message-preview';
+
+export default () => <MessagePreview external='https://cdn.jsdelivr.net/npm/@kookapp/kook-message-preview@0.0.3/dist/markdown-parse.0.0.10.js' />;
+```
+
+
 ## 卡片消息基本使用
 这是一个简单的卡片消息例子
 
@@ -108,7 +141,7 @@ const content =[
   }
 ]
 
-export default () => <MessagePreview type="card" content={content} />;
+export default () => <MessagePreview type="card" content={content} external='https://cdn.jsdelivr.net/npm/@kookapp/kook-message-preview@0.0.3/dist/markdown-parse.0.0.10.js' />;
 ```
 
 
@@ -121,7 +154,7 @@ import { MessagePreview } from '@kookapp/kook-message-preview';
 const content = `~~删除线~~`
  
 
-export default () => <MessagePreview type="kmd" content={content} />;
+export default () => <MessagePreview type="kmd" content={content} external='https://cdn.jsdelivr.net/npm/@kookapp/kook-message-preview@0.0.3/dist/markdown-parse.0.0.10.js' />;
 ```
 
 ## API
@@ -131,5 +164,6 @@ export default () => <MessagePreview type="kmd" content={content} />;
 | type    | 消息类型  `'card'`(卡片消息)  `'kmd'`（KMarkDown消息）                                                  | `string`          | `'card'`  |
 | theme   | 主题色 `'light' 或 'dark'`                                                                            | `string`          | `'light'` |
 | content | 消息内容：具体可查看[消息编辑器](https://tttt-www.dev.chuanyuapp.com/tools/message-builder.html#/card) 或者 [卡片消息说明](/card_desc) 和 [KMarkDown消息说明](/kmd_desc)   | `string 或 array` | `[]`      |
+| external    | wasm资源地址                                                 | `string`          | `''`  |
 
 

@@ -1,10 +1,4 @@
-import React, {
-  Component,
-  PureComponent,
-  useCallback,
-  useState,
-  useMemo,
-} from 'react';
+import React from 'react';
 import {
   Text,
   Title,
@@ -18,13 +12,12 @@ import {
   Video,
   CountDown,
   Card,
-  Music,
-  Invite,
   Container,
 } from '@kaiheila/kui-lib';
 import MarkdownMessageText from '../../components/MarkdownMessageText';
 import { printEmoji, printReactEmoji } from '../emoji/emoji';
-import { markdownParse } from '../parse/markdownParse';
+import MusicPlayer from '../../components/MusicPlayer';
+import CardVideoWrapper from '../../components/CardVideoWrapper';
 
 function parseModule(module, cardSize, msgInfo) {
   if (typeof module === 'string') {
@@ -141,7 +134,7 @@ function parseModule(module, cardSize, msgInfo) {
       break;
     case 'video':
       fragment = (
-        <Video
+        <CardVideoWrapper
           src={module.src}
           outside={module.external}
           size={cardSize}
@@ -149,19 +142,21 @@ function parseModule(module, cardSize, msgInfo) {
           fileSize={module.size}
           duration={module.duration}
           poster={module.cover}
-          onClickPlay={() => {}}
         />
       );
       break;
     case 'audio':
       fragment = (
-        <Music
+        <MusicPlayer
           src={module.src}
           outside={module.external}
           fileName={module.title}
+          fileSize={module.size}
           controls={cardSize !== 'sm'}
           duration={module.duration}
           icon={module.cover}
+          id={`${msgInfo?.id}${module?.src}${module?.title}`}
+          canDownload={module.canDownload}
         />
       );
       break;

@@ -8,7 +8,7 @@ nav:
 
 有以下两种加载方式
 
-1. 下载 https://static.kookapp.cn/app/assets/lib/markdown-parse.0.0.10.js 复制代码 至 html 文件中 的 script标签中
+1. 下载 https://cdn.jsdelivr.net/npm/@kookapp/kook-message-preview@0.0.3/dist/markdown-parse.0.0.10.js 复制代码 至 html 文件中 的 script标签中
 
 ```html
 <html>
@@ -28,13 +28,13 @@ nav:
 </html>
 ```
 
-2. 使用组件时 传入参数 `external=cdn地址` 例如以下代码示例都使用 external https://static.kookapp.cn/app/assets/lib/markdown-parse.0.0.10.js
+2. 使用组件时 传入参数 `external=cdn地址` 例如以下代码示例都使用 external https://cdn.jsdelivr.net/npm/@kookapp/kook-message-preview@0.0.3/dist/markdown-parse.0.0.10.js
 
 ```js
 import { MessagePreview } from '@kookapp/kook-message-preview';
 
 export default () => (
-  <MessagePreview external="https://static.kookapp.cn/app/assets/lib/markdown-parse.0.0.10.js" />
+  <MessagePreview external="https://cdn.jsdelivr.net/npm/@kookapp/kook-message-preview@0.0.3/dist/markdown-parse.0.0.10.js" />
 );
 ```
 
@@ -156,7 +156,7 @@ export default () => (
   <MessagePreview
     type="card"
     content={content}
-    external="https://static.kookapp.cn/app/assets/lib/markdown-parse.0.0.10.js"
+    external="https://cdn.jsdelivr.net/npm/@kookapp/kook-message-preview@0.0.3/dist/markdown-parse.0.0.10.js"
   />
 );
 ```
@@ -174,7 +174,7 @@ export default () => (
   <MessagePreview
     type="kmd"
     content={content}
-    external="https://static.kookapp.cn/app/assets/lib/markdown-parse.0.0.10.js"
+    external="https://cdn.jsdelivr.net/npm/@kookapp/kook-message-preview@0.0.3/dist/markdown-parse.0.0.10.js"
   />
 );
 ```

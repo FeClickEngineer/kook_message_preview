@@ -20,9 +20,7 @@ nav:
 
   <body>
     <script>
-      //static.kookapp.cn/app/assets/lib/markdown-parse.0.0.10.js
-
-      https: 里面的代码;
+      // https://cdn.jsdelivr.net/npm/@kookapp/kook-message-preview@0.0.3/dist/markdown-parse.0.0.10.js  里面的代码;
     </script>
   </body>
 </html>

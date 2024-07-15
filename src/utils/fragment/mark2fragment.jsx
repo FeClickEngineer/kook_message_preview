@@ -136,7 +136,7 @@ function parseTag(item, options) {
       break;
     default:
       // 动态渲染标签
-      fragment = <TagName {...attrs}>{children && parse(children)}</TagName>;
+      fragment = <TagName {...attrs}>{children && parse(children, options)}</TagName>;
   }
   return fragment;
 }

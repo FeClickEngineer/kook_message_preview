@@ -1,9 +1,19 @@
 import React from 'react';
 import { Video } from '@kaiheila/kui-lib';
 function CardVideoWrapper(props) {
-  const { fileSize, src, external, title, size, duration, cover } = props;
+  const {
+    fileSize,
+    src,
+    external,
+    title,
+    size,
+    duration,
+    cover,
+    onClickPlay,
+    onClickDown,
+  } = props;
 
-  const download_music = () => {
+  const downloadMusic = () => {
     const a = document.createElement('a');
     a.href = src;
     a.setAttribute('target', '_blank');
@@ -20,9 +30,9 @@ function CardVideoWrapper(props) {
       fileSize={fileSize}
       duration={duration}
       poster={cover}
-      onClickPlay={() => {}}
+      onClickPlay={(props) => onClickPlay(props) ?? {}}
       status={'done'}
-      onClickDown={download_music}
+      onClickDown={(props) => onClickDown(props) ?? downloadMusic()}
     />
   );
 }

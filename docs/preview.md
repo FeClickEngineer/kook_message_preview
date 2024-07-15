@@ -265,14 +265,185 @@ export default () => {
 };
 ```
 
+## 处理卡片组件事件
+
+```jsx
+import { MessagePreview } from '@kookapp/kook-message-preview';
+
+const cards = [
+  {
+    "type": "card",
+    "theme": "secondary",
+    "size": "lg",
+    "modules": [
+      {
+        "type": "section",
+        "text": {
+          "type": "plain-text",
+          "content": "您是否认为\"KOOK\"是最好的语音软件？"
+        },
+        "mode": "right",
+        "accessory": {
+          "type": "button",
+          "theme": "primary",
+          "text": {
+            "type": "plain-text",
+            "content": "完全同意"
+          }
+        }
+      },
+      {
+        "type": "container",
+        "elements": [
+          {
+            "type": "image",
+            "src": "https://img.kaiheila.cn/assets/2021-01/7kr4FkWpLV0ku0ku.jpeg"
+          }
+        ]
+      },
+      {
+        "type": "image-group",
+        "elements": [
+          {
+            "type": "image",
+            "src": "https://img.kaiheila.cn/assets/2021-01/pWsmcLsPJq08c08c.jpeg"
+          },
+          {
+            "type": "image",
+            "src": "https://img.kaiheila.cn/assets/2021-01/YIfHfnvxaV0dw0dw.jpg"
+          },
+          {
+            "type": "image",
+            "src": "https://img.kaiheila.cn/assets/2021-01/YevTY6eGJa0fk0f2.jpeg"
+          },
+          {
+            "type": "image",
+            "src": "https://img.kaiheila.cn/assets/2021-01/r2K9RjHZ4s0xc0xc.jpeg"
+          },
+          {
+            "type": "image",
+            "src": "https://img.kaiheila.cn/assets/2021-01/klosFRTVy90jz0k0.jpg"
+          },
+          {
+            "type": "image",
+            "src": "https://img.kaiheila.cn/assets/2021-01/veHnEhzu6c0dw0dv.jpg"
+          },
+          {
+            "type": "image",
+            "src": "https://img.kaiheila.cn/assets/2021-01/tiVWPIuTrf0dw0dw.jpg"
+          },
+          {
+            "type": "image",
+            "src": "https://img.kaiheila.cn/assets/2021-01/wExzRIrTeR0j60j7.jpeg"
+          },
+          {
+            "type": "image",
+            "src": "https://img.kaiheila.cn/assets/2021-01/AybvLWYQgA0dw0dw.jpg"
+          }
+        ]
+      },
+      {
+        "type": "action-group",
+        "elements": [
+          {
+            "type": "button",
+            "theme": "primary",
+            "value": "ok",
+            "text": {
+              "type": "plain-text",
+              "content": "确定"
+            }
+          },
+          {
+            "type": "button",
+            "theme": "danger",
+            "value": "cancel",
+            "text": {
+              "type": "plain-text",
+              "content": "取消"
+            }
+          }
+        ]
+      },
+      {
+        "type": "file",
+        "title": "KOOK介绍.txt",
+        "src": "https://img.kaiheila.cn/attachments/2021-01/21/600972b5d0d31.txt",
+        "size": "61"
+      },
+      {
+        "type": "audio",
+        "title": "命运交响曲",
+        "src": "https://img.kaiheila.cn/attachments/2021-01/21/600975671b9ab.mp3",
+        "cover": "https://img.kaiheila.cn/assets/2021-01/rcdqa8fAOO0hs0mc.jpg"
+      },
+      {
+        "type": "video",
+        "title": "有本事别笑",
+        "src": "https://img.kaiheila.cn/attachments/2021-01/20/6008127e8c8de.mp4"
+      }
+    ]
+  }
+]
+
+const customVideoEvents = {
+  onPlay: (props) => {
+    alert("video onClick:\n" + JSON.stringify(props, null, 2))
+  },
+  onDownload: (src) => {
+    alert("video onDownload:" + src)
+  }
+}
+
+const customAudioEvents = {
+  onPlay: (props) => {
+    alert("audio onPlay:\n" + JSON.stringify(props, null, 2))
+  },
+  onDownload: (src) => {
+    alert("audio onDownload:" + src)
+  }
+}
+
+const customFileEvents = {
+  onDownload: (src) => {
+    alert("file onDownload:" + src)
+  }
+}
+
+const customButtonEvents = {
+  onClick: (module) => {
+    alert("button onClick:\n" + JSON.stringify(module, null, 2))
+  }
+}
+
+const customImageEvents = {
+  onClick: (module) => {
+    alert("image onClick:\n" + JSON.stringify(module, null, 2))
+  }
+}
+
+export default () => {
+  return (<MessagePreview
+  type="card"
+  content={cards}
+  external="https://cdn.jsdelivr.net/npm/@kookapp/kook-message-preview@0.0.3/dist/markdown-parse.0.0.10.js"
+  customVideoEvents={customVideoEvents}
+  customAudioEvents={customAudioEvents}
+  customFileEvents={customFileEvents}
+  customButtonEvents={customButtonEvents}
+  customImageEvents={customImageEvents}
+  />)
+}
+```
+
 ## API
 
-| 属性名 | 描述 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| type | 消息类型 `'card'`(卡片消息) `'kmd'`（KMarkDown消息） | `string` | `'card'` |
-| theme | 主题色 `'light' 或 'dark'` | `string` | `'light'` |
-| content | 消息内容：具体可查看[消息编辑器](https://www.kookapp.cn/tools/message-builder.html#/card) 或者 [卡片消息说明](https://developer.kookapp.cn/doc/cardmessage) 和 [KMarkDown消息说明](https://developer.kookapp.cn/doc/kmarkdown) | `string 或 array` | `[]` |
-| external | 解析kmarkdown方法的 资源文件地址 | `string` | `''` |
-| customMetUserRender | 自定义@用户节点渲染 | `(user_id: string) => ReactNode` |  |
-| customRoleRender | 自定义@角色节点渲染 | `(role_id: string) => ReactNode` |  |
-| customChannelRender | 自定义@频道节点渲染 | `(channel_id: string) => ReactNode` |  |
+| 属性名              | 描述                                                                                                                                                                                                                           | 类型                                | 默认值    |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------- | --------- |
+| type                | 消息类型 `'card'`(卡片消息) `'kmd'`（KMarkDown消息）                                                                                                                                                                           | `string`                            | `'card'`  |
+| theme               | 主题色 `'light' 或 'dark'`                                                                                                                                                                                                     | `string`                            | `'light'` |
+| content             | 消息内容：具体可查看[消息编辑器](https://www.kookapp.cn/tools/message-builder.html#/card) 或者 [卡片消息说明](https://developer.kookapp.cn/doc/cardmessage) 和 [KMarkDown消息说明](https://developer.kookapp.cn/doc/kmarkdown) | `string 或 array`                   | `[]`      |
+| external            | 解析kmarkdown方法的 资源文件地址                                                                                                                                                                                               | `string`                            | `''`      |
+| customMetUserRender | 自定义@用户节点渲染                                                                                                                                                                                                            | `(user_id: string) => ReactNode`    |           |
+| customRoleRender    | 自定义@角色节点渲染                                                                                                                                                                                                            | `(role_id: string) => ReactNode`    |           |
+| customChannelRender | 自定义@频道节点渲染                                                                                                                                                                                                            | `(channel_id: string) => ReactNode` |           |

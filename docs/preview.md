@@ -271,7 +271,7 @@ export default () => {
 | --- | --- | --- | --- |
 | type | 消息类型 `'card'`(卡片消息) `'kmd'`（KMarkDown消息） | `string` | `'card'` |
 | theme | 主题色 `'light' 或 'dark'` | `string` | `'light'` |
-| content | 消息内容：具体可查看[消息编辑器](https://tttt-www.dev.chuanyuapp.com/tools/message-builder.html#/card) 或者 [卡片消息说明](/card_desc) 和 [KMarkDown消息说明](/kmd_desc) | `string 或 array` | `[]` |
+| content | 消息内容：具体可查看[消息编辑器](https://www.kookapp.cn/tools/message-builder.html#/card) 或者 [卡片消息说明](https://developer.kookapp.cn/doc/cardmessage) 和 [KMarkDown消息说明](https://developer.kookapp.cn/doc/kmarkdown) | `string 或 array` | `[]` |
 | external | 解析kmarkdown方法的 资源文件地址 | `string` | `''` |
 | customMetUserRender | 自定义@用户节点渲染 | `(user_id: string) => ReactNode` |  |
 | customRoleRender | 自定义@角色节点渲染 | `(role_id: string) => ReactNode` |  |

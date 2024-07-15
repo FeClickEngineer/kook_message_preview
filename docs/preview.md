@@ -183,5 +183,5 @@ export default () => (
 | --- | --- | --- | --- |
 | type | 消息类型 `'card'`(卡片消息) `'kmd'`（KMarkDown消息） | `string` | `'card'` |
 | theme | 主题色 `'light' 或 'dark'` | `string` | `'light'` |
-| content | 消息内容：具体可查看[消息编辑器](https://tttt-www.dev.chuanyuapp.com/tools/message-builder.html#/card) 或者 [卡片消息说明](/card_desc) 和 [KMarkDown消息说明](/kmd_desc) | `string 或 array` | `[]` |
+| content | 消息内容：具体可查看[消息编辑器](https://www.kookapp.cn/tools/message-builder.html#/card) 或者 [卡片消息说明](/card_desc) 和 [KMarkDown消息说明](/kmd_desc) | `string 或 array` | `[]` |
 | external | wasm资源地址 | `string` | `''` |

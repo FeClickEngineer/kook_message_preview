@@ -177,11 +177,45 @@ export default () => (
 );
 ```
 
+## 注入提及和链接组件
+
+```jsx
+import { MessagePreview } from '@kookapp/kook-message-preview';
+
+const content = `(met)user_id(met) (rol)role_id(rol) (chn)channel_id(chn)`;
+
+function MentionUser(userId) {
+  return <span>@User ({userId})</span>
+}
+
+function MentionRole(roleId) {
+  return <span>@Role ({roleId})</span>
+}
+
+function LinkChannel(channelId) {
+  return <span>#Channel ({channelId})</span>
+}
+
+export default () => (
+  <MessagePreview
+    external="https://cdn.jsdelivr.net/npm/@kookapp/kook-message-preview@0.0.4/dist/markdown-parse.0.0.10.js"
+    type="kmd"
+    content={content}
+    mentionUserNode={MentionUser}
+    mentionRoleNode={MentionRole}
+    channelLinkNode={LinkChannel}
+  />
+);
+```
+
 ## API
 
-| 属性名 | 描述 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| type | 消息类型 `'card'`(卡片消息) `'kmd'`（KMarkDown消息） | `string` | `'card'` |
-| theme | 主题色 `'light' 或 'dark'` | `string` | `'light'` |
-| content | 消息内容：具体可查看[消息编辑器](https://tttt-www.dev.chuanyuapp.com/tools/message-builder.html#/card) 或者 [卡片消息说明](/card_desc) 和 [KMarkDown消息说明](/kmd_desc) | `string 或 array` | `[]` |
-| external | wasm资源地址 | `string` | `''` |
+| 属性名          | 描述                                                                                                                                                                     | 类型                 | 默认值            |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------- | ----------------- |
+| type            | 消息类型 `'card'`(卡片消息) `'kmd'`（KMarkDown消息）                                                                                                                     | `string`             | `'card'`          |
+| theme           | 主题色 `'light' 或 'dark'`                                                                                                                                               | `string`             | `'light'`         |
+| content         | 消息内容：具体可查看[消息编辑器](https://tttt-www.dev.chuanyuapp.com/tools/message-builder.html#/card) 或者 [卡片消息说明](/card_desc) 和 [KMarkDown消息说明](/kmd_desc) | `string 或 array`    | `[]`              |
+| external        | wasm资源地址                                                                                                                                                             | `string`             | `''`              |
+| mentionUserNode | 渲染提及用户组件的函数                                                                                                                                                   | `(id: string) : any` | `(id) => '@用户'` |
+| mentionRoleNode | 渲染提及角色组件的函数                                                                                                                                                   | `(id: string) : any` | `(id) => '@角色'` |
+| channelLinkNode | 渲染频道链接组件的函数                                                                                                                                                   | `(id: string) : any` | `(id) => '#频道'` |

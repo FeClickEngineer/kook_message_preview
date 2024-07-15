@@ -3,11 +3,22 @@ import { markdownParse } from '../../utils/parse/markdownParse';
 import { mark2fragment } from '../../utils/fragment/mark2fragment';
 
 function MarkdownMessageText(props) {
-  const { msgInfo, content } = props;
+  const {
+    msgInfo,
+    content,
+    mentionUserNode,
+    mentionRoleNode,
+    channelLinkNode,
+  } = props;
 
   return (
     <span className="markdown-preview">
-      {mark2fragment(markdownParse(content))}
+      {mark2fragment(
+        markdownParse(content),
+        mentionUserNode,
+        mentionRoleNode,
+        channelLinkNode,
+      )}
     </span>
   );
 }

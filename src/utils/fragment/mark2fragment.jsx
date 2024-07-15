@@ -3,24 +3,16 @@ import { printEmoji } from '../emoji/emoji';
 import CodeblockNode from '../../components/CodeblockNode';
 import SpoilerNode from '../../components/SpoilerNode';
 
-function ChannelLinkNode() {
-  return '#频道';
-}
-function MentionUserNode() {
-  return '@用户';
-}
-function MentionNode(props) {
-  return props.name;
-}
-function MentionRoleNode() {
-  return '@角色';
-}
-
 function getCustomEmojiUrl(id) {
   return `https://img.kaiheila.cn/emojis/${id}.png`;
 }
 
-function parse(children = []) {
+function parse(
+  children = [],
+  mentionUserNode,
+  mentionRoleNode,
+  channelLinkNode,
+) {
   return children.map((item, i) => {
     const { type, tagName: TagName, content, attrs, children } = item;
 
@@ -28,10 +20,14 @@ function parse(children = []) {
 
     switch (type) {
       case 'tag':
-        fragment = <React.Fragment key={i}>{parseTag(item)}</React.Fragment>;
+        fragment = (
+          <React.Fragment key={i}>
+            {parseTag(item, mentionUserNode, mentionRoleNode, channelLinkNode)}
+          </React.Fragment>
+        );
         break;
       case 'control':
-        fragment = <React.Fragment key={i}>{parse(children)}</React.Fragment>;
+        fragment = <React.Fragment key={i}>{parse(children, mentionUserNode, mentionRoleNode, channelLinkNode)}</React.Fragment>;
         break;
       case 'text':
         fragment = (
@@ -48,11 +44,21 @@ function parse(children = []) {
   });
 }
 
-export function mark2fragment(markdown) {
-  return parse(markdown.children);
+export function mark2fragment(
+  markdown,
+  mentionUserNode,
+  mentionRoleNode,
+  channelLinkNode,
+) {
+  return parse(
+    markdown.children,
+    mentionUserNode,
+    mentionRoleNode,
+    channelLinkNode,
+  );
 }
 
-function parseTag(item) {
+function parseTag(item, mentionUserNode, mentionRoleNode, channelLinkNode) {
   const { type, tagName: TagName, content, attrs, children } = item;
 
   let fragment = null;
@@ -79,10 +85,21 @@ function parseTag(item) {
       );
       break;
     case 'spl':
-      fragment = <SpoilerNode>{children && parse(children)}</SpoilerNode>;
+      fragment = (
+        <SpoilerNode>
+          {children &&
+            parse(children, mentionUserNode, mentionRoleNode, channelLinkNode)}
+        </SpoilerNode>
+      );
       break;
     case 'chn':
-      fragment = <ChannelLinkNode channel_id={childrenContent} />;
+      fragment = channelLinkNode(childrenContent);
+      break;
+    case 'met':
+      fragment = mentionUserNode(childrenContent);
+      break;
+    case 'rol':
+      fragment = mentionRoleNode(childrenContent);
       break;
     case 'code':
       fragment = (
@@ -99,13 +116,13 @@ function parseTag(item) {
     case 'font':
       fragment = (
         <span className={`kmd-font ${attrs?.theme}  ${attrs?.size}`}>
-          {children && parse(children)}
+          {children && parse(children, mentionUserNode, mentionRoleNode, channelLinkNode)}
         </span>
       );
       break;
     default:
       // 动态渲染标签
-      fragment = <TagName {...attrs}>{children && parse(children)}</TagName>;
+      fragment = <TagName {...attrs}>{children && parse(children, mentionUserNode, mentionRoleNode, channelLinkNode)}</TagName>;
   }
   return fragment;
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { printReactEmoji, printEmoji } from '../emoji/emoji';
+import { printEmoji } from '../emoji/emoji';
 import CodeblockNode from '../../components/CodeblockNode';
 import SpoilerNode from '../../components/SpoilerNode';
 
@@ -94,6 +94,13 @@ function parseTag(item) {
     case 'codeblock':
       fragment = (
         <CodeblockNode code={{ text: childrenContent, lang: attrs[0] }} />
+      );
+      break;
+    case 'font':
+      fragment = (
+        <span className={`kmd-font ${attrs?.theme}  ${attrs?.size}`}>
+          {children && parse(children)}
+        </span>
       );
       break;
     default:

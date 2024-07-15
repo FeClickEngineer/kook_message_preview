@@ -143,20 +143,64 @@ const content = [
         text: {
           type: 'kmarkdown',
           content:
-            '(font)安全免费(font)[success] (font)没有广告(font)[purple] (font)低资源占用(font)[warning] (font)高通话质量(font)[pink]',
+            '(font)安全免费(font)[success] (font)没有广告(font)[purple] (font)低资源占用(font)[warning] (font)高通话质量(font)[pink] (met)2(met) (rol)3(rol) (chn)4(chn)',
         },
       },
     ],
   },
 ];
 
-export default () => (
-  <MessagePreview
-    type="card"
-    content={content}
-    external="https://cdn.jsdelivr.net/npm/@kookapp/kook-message-preview@0.0.3/dist/markdown-parse.0.0.10.js"
-  />
-);
+export default () => {
+  function customMetUserRender(id) {
+    return (
+      <span
+        style={{ color: 'red' }}
+        onClick={() => {
+          alert(`点击自定义@用户节点 id${id}`);
+        }}
+      >
+        card自定义@用户渲染 {id}
+      </span>
+    );
+  }
+
+  function customRoleRender(id) {
+    return (
+      <span
+        style={{ color: 'gray' }}
+        onClick={() => {
+          alert(`点击自定义@角色节点 id${id}`);
+        }}
+      >
+        card自定义@角色渲染 {id}
+      </span>
+    );
+  }
+
+  function customChannelRender(id) {
+    return (
+      <span
+        style={{ color: 'blue' }}
+        onClick={() => {
+          alert(`点击自定义@频道节点 id${id}`);
+        }}
+      >
+        card自定义@频道渲染 {id}
+      </span>
+    );
+  }
+
+  return (
+    <MessagePreview
+      type="card"
+      content={content}
+      external="https://cdn.jsdelivr.net/npm/@kookapp/kook-message-preview@0.0.3/dist/markdown-parse.0.0.10.js"
+      customMetUserRender={customMetUserRender}
+      customRoleRender={customRoleRender}
+      customChannelRender={customChannelRender}
+    />
+  );
+};
 ```
 
 ## KMarkDown消息基本使用
@@ -166,15 +210,59 @@ export default () => (
 ```jsx
 import { MessagePreview } from '@kookapp/kook-message-preview';
 
-const content = `~~删除线~~ (font)安全免费(font)[success] (font)没有广告(font)[purple] (font)低资源占用(font)[warning] (font)高通话质量(font)[pink]`;
+const content = `
+~~删除线~~ (font)安全免费(font)[success] (font)没有广告(font)[purple] (font)低资源占用(font)[warning] (font)高通话质量(font)[pink] (met)123(met) (rol)321(rol) (chn)321(chn)`;
 
-export default () => (
-  <MessagePreview
-    type="kmd"
-    content={content}
-    external="https://cdn.jsdelivr.net/npm/@kookapp/kook-message-preview@0.0.3/dist/markdown-parse.0.0.10.js"
-  />
-);
+export default () => {
+  function customMetUserRender(id) {
+    return (
+      <span
+        style={{ color: 'red' }}
+        onClick={() => {
+          alert(`点击自定义@用户节点 id${id}`);
+        }}
+      >
+        kmd自定义@用户渲染 {id}
+      </span>
+    );
+  }
+
+  function customRoleRender(id) {
+    return (
+      <span
+        style={{ color: 'gray' }}
+        onClick={() => {
+          alert(`点击自定义@角色节点 id${id}`);
+        }}
+      >
+        kmd自定义@角色渲染 {id}
+      </span>
+    );
+  }
+
+  function customChannelRender(id) {
+    return (
+      <span
+        style={{ color: 'blue' }}
+        onClick={() => {
+          alert(`点击自定义@频道节点 id${id}`);
+        }}
+      >
+        kmd自定义@频道渲染 {id}
+      </span>
+    );
+  }
+  return (
+    <MessagePreview
+      type="kmd"
+      content={content}
+      external="https://cdn.jsdelivr.net/npm/@kookapp/kook-message-preview@0.0.3/dist/markdown-parse.0.0.10.js"
+      customMetUserRender={customMetUserRender}
+      customRoleRender={customRoleRender}
+      customChannelRender={customChannelRender}
+    />
+  );
+};
 ```
 
 ## API
@@ -184,4 +272,7 @@ export default () => (
 | type | 消息类型 `'card'`(卡片消息) `'kmd'`（KMarkDown消息） | `string` | `'card'` |
 | theme | 主题色 `'light' 或 'dark'` | `string` | `'light'` |
 | content | 消息内容：具体可查看[消息编辑器](https://tttt-www.dev.chuanyuapp.com/tools/message-builder.html#/card) 或者 [卡片消息说明](/card_desc) 和 [KMarkDown消息说明](/kmd_desc) | `string 或 array` | `[]` |
-| external | wasm资源地址 | `string` | `''` |
+| external | 解析kmarkdown方法的 资源文件地址 | `string` | `''` |
+| customMetUserRender | 自定义@用户节点渲染 | `(user_id: string) => ReactNode` |  |
+| customRoleRender | 自定义@角色节点渲染 | `(role_id: string) => ReactNode` |  |
+| customChannelRender | 自定义@频道节点渲染 | `(channel_id: string) => ReactNode` |  |

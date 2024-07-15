@@ -19,7 +19,7 @@ import { printEmoji, printReactEmoji } from '../emoji/emoji';
 import MusicPlayer from '../../components/MusicPlayer';
 import CardVideoWrapper from '../../components/CardVideoWrapper';
 
-function parseModule(module, cardSize, msgInfo) {
+function parseModule(module, cardSize, options) {
   if (typeof module === 'string') {
     return (
       <Text>
@@ -48,7 +48,7 @@ function parseModule(module, cardSize, msgInfo) {
         typeof module.text === 'string' ? (
           <React.Fragment>{printReactEmoji(module.text)}</React.Fragment>
         ) : (
-          parseModule(module.text, cardSize)
+          parseModule(module.text, cardSize, options)
         );
       fragment = <Title>{childContent}</Title>;
       break;
@@ -56,7 +56,9 @@ function parseModule(module, cardSize, msgInfo) {
       fragment = (
         <Section
           accessory={
-            module.accessory ? parseModule(module.accessory, cardSize) : null
+            module.accessory
+              ? parseModule(module.accessory, cardSize, options)
+              : null
           }
           mode={module.mode}
           size={cardSize}
@@ -68,7 +70,7 @@ function parseModule(module, cardSize, msgInfo) {
               : false
           }
         >
-          {parseModule(module.text, cardSize)}
+          {parseModule(module.text, cardSize, options)}
         </Section>
       );
       break;
@@ -77,7 +79,7 @@ function parseModule(module, cardSize, msgInfo) {
         <Paragraph
           size={cardSize}
           cols={module.cols}
-          childrens={parseModuleList(module.fields, cardSize)}
+          childrens={parseModuleList(module.fields, cardSize, options)}
         />
       );
       break;
@@ -100,12 +102,12 @@ function parseModule(module, cardSize, msgInfo) {
     case 'action-group':
       fragment = (
         <Button.Wrapper>
-          {parseModuleList(module.elements, cardSize)}
+          {parseModuleList(module.elements, cardSize, options)}
         </Button.Wrapper>
       );
       break;
     case 'button':
-      childContent = parseModule(module.text, cardSize);
+      childContent = parseModule(module.text, cardSize, options);
       fragment = (
         <Button
           block={cardSize === 'sm'}
@@ -117,7 +119,9 @@ function parseModule(module, cardSize, msgInfo) {
       );
       break;
     case 'context':
-      fragment = <Remark>{parseModuleList(elements, cardSize)}</Remark>;
+      fragment = (
+        <Remark>{parseModuleList(elements, cardSize, options)}</Remark>
+      );
       break;
     case 'divider':
       fragment = <Hr />;
@@ -155,7 +159,7 @@ function parseModule(module, cardSize, msgInfo) {
           controls={cardSize !== 'sm'}
           duration={module.duration}
           icon={module.cover}
-          id={`${msgInfo?.id}${module?.src}${module?.title}`}
+          id={`${module?.src}${module?.title}`}
           canDownload={module.canDownload}
         />
       );
@@ -172,30 +176,32 @@ function parseModule(module, cardSize, msgInfo) {
       }
       break;
     case 'kmarkdown':
-      fragment = <MarkdownMessageText content={content} />;
+      fragment = <MarkdownMessageText content={content} options={options} />;
       break;
   }
   return fragment;
 }
 
-function parseModuleList(moduleList, cardSize) {
+function parseModuleList(moduleList, cardSize, options) {
   moduleList = moduleList || [];
 
   return moduleList.map((module, i) => {
     return (
-      <React.Fragment key={i}>{parseModule(module, cardSize)}</React.Fragment>
+      <React.Fragment key={i}>
+        {parseModule(module, cardSize, options)}
+      </React.Fragment>
     );
   });
 }
 
 // 将JSON 转换为 对应元素
-export function json2fragment(cardList) {
+export function json2fragment(cardList, options) {
   return cardList.map((card, i) => {
     const { modules = [], color, size, theme } = card;
 
     return (
       <Card color={color} theme={theme} size={size} key={i}>
-        {parseModuleList(modules, size)}
+        {parseModuleList(modules, size, options)}
       </Card>
     );
   });

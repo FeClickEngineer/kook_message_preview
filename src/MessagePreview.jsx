@@ -7,16 +7,21 @@ import '@kaiheila/kui-lib/lib/index.css';
 import './styles/index.less';
 
 function MessagePreview(props) {
-  const { type = 'card', content = [], theme = 'light' ,external = ''} = props;
+  const {
+    type = 'card',
+    content = [],
+    theme = 'light',
+    external = '',
+    customMetUserRender,
+    customRoleRender,
+    customChannelRender,
+  } = props;
 
-  const status = useExternal(
-    external,
-    {
-      js: {
-        async: true,
-      },
+  const status = useExternal(external, {
+    js: {
+      async: true,
     },
-  );
+  });
 
   // markdown解析方法加载成功后再渲染组件
   if (external && status !== 'ready') {
@@ -28,6 +33,11 @@ function MessagePreview(props) {
       <div className={`card-message-preview theme-${theme}`}>
         {json2fragment(
           typeof content === 'string' ? JSON.parse(content) : content,
+          {
+            customMetUserRender,
+            customRoleRender,
+            customChannelRender,
+          },
         )}
       </div>
     );
@@ -36,7 +46,11 @@ function MessagePreview(props) {
   if (type === 'kmd') {
     return (
       <span className={`markdown-preview theme-${theme}`}>
-        {mark2fragment(markdownParse(content))}
+        {mark2fragment(markdownParse(content), {
+          customMetUserRender,
+          customRoleRender,
+          customChannelRender,
+        })}
       </span>
     );
   }

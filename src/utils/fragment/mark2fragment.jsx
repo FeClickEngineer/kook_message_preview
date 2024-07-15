@@ -3,24 +3,38 @@ import { printEmoji } from '../emoji/emoji';
 import CodeblockNode from '../../components/CodeblockNode';
 import SpoilerNode from '../../components/SpoilerNode';
 
-function ChannelLinkNode() {
-  return '#频道';
+function ChannelLinkNode(props) {
+  const { channel_id, options } = props;
+  const customChannelRender = options?.customChannelRender;
+  if (typeof customChannelRender === 'function') {
+    return customChannelRender(channel_id);
+  }
+  return `#频道id:${channel_id}`;
 }
-function MentionUserNode() {
-  return '@用户';
+
+function MentionUserNode(props) {
+  const { user_id, options } = props;
+  const customMetUserRender = options?.customMetUserRender;
+  if (typeof customMetUserRender === 'function') {
+    return customMetUserRender(user_id);
+  }
+  return `@用户id:${user_id}`;
 }
-function MentionNode(props) {
-  return props.name;
-}
-function MentionRoleNode() {
-  return '@角色';
+
+function MentionRoleNode(props) {
+  const { role_id, options } = props;
+  const customRoleRender = options?.customRoleRender;
+  if (typeof customRoleRender === 'function') {
+    return customRoleRender(role_id);
+  }
+  return `@角色id:1 ${role_id}`;
 }
 
 function getCustomEmojiUrl(id) {
   return `https://img.kaiheila.cn/emojis/${id}.png`;
 }
 
-function parse(children = []) {
+function parse(children = [], options) {
   return children.map((item, i) => {
     const { type, tagName: TagName, content, attrs, children } = item;
 
@@ -28,10 +42,14 @@ function parse(children = []) {
 
     switch (type) {
       case 'tag':
-        fragment = <React.Fragment key={i}>{parseTag(item)}</React.Fragment>;
+        fragment = (
+          <React.Fragment key={i}>{parseTag(item, options)}</React.Fragment>
+        );
         break;
       case 'control':
-        fragment = <React.Fragment key={i}>{parse(children)}</React.Fragment>;
+        fragment = (
+          <React.Fragment key={i}>{parse(children, options)}</React.Fragment>
+        );
         break;
       case 'text':
         fragment = (
@@ -48,11 +66,11 @@ function parse(children = []) {
   });
 }
 
-export function mark2fragment(markdown) {
-  return parse(markdown.children);
+export function mark2fragment(markdown, options) {
+  return parse(markdown.children, options);
 }
 
-function parseTag(item) {
+function parseTag(item, options) {
   const { type, tagName: TagName, content, attrs, children } = item;
 
   let fragment = null;
@@ -82,8 +100,21 @@ function parseTag(item) {
       fragment = <SpoilerNode>{children && parse(children)}</SpoilerNode>;
       break;
     case 'chn':
-      fragment = <ChannelLinkNode channel_id={childrenContent} />;
+      fragment = (
+        <ChannelLinkNode channel_id={childrenContent} options={options} />
+      );
       break;
+    case 'met':
+      fragment = (
+        <MentionUserNode user_id={childrenContent} options={options} />
+      );
+      break;
+    case 'rol':
+      fragment = (
+        <MentionRoleNode role_id={childrenContent} options={options} />
+      );
+      break;
+
     case 'code':
       fragment = (
         <code className="line">

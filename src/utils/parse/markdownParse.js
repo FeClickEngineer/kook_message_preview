@@ -3,6 +3,15 @@ let MarkdownModule = window.createMarkdownModule
   : {};
 
 export function markdownParse(str = '', { supportFont = true } = {}) {
+  const MarkdownModuleKeys = Object.keys(MarkdownModule);
+
+  if (
+    MarkdownModuleKeys.length === 0 &&
+    typeof window.createMarkdownModule === 'function'
+  ) {
+    MarkdownModule = window.createMarkdownModule();
+  }
+
   const {
     allocate,
     intArrayFromString,

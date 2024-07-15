@@ -19,26 +19,13 @@ import { printEmoji, printReactEmoji } from '../emoji/emoji';
 import MusicPlayer from '../../components/MusicPlayer';
 import CardVideoWrapper from '../../components/CardVideoWrapper';
 
-function ChannelLinkNode(id) {
-  return '#频道';
-}
-function MentionUserNode(id) {
-  return '@用户';
-}
-function MentionNode(props) {
-  return props.name;
-}
-function MentionRoleNode(id) {
-  return '@角色';
-}
-
 function parseModule(
   module,
   cardSize,
   msgInfo,
-  mentionUserNode = (id) => MentionUserNode(id),
-  mentionRoleNode = (id) => MentionRoleNode(id),
-  channelLinkNode = (id) => ChannelLinkNode(id),
+  mentionUserNode,
+  mentionRoleNode,
+  channelLinkNode,
 ) {
   if (typeof module === 'string') {
     return (

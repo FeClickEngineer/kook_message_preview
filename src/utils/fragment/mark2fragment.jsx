@@ -130,13 +130,15 @@ function parseTag(item, options) {
     case 'font':
       fragment = (
         <span className={`kmd-font ${attrs?.theme}  ${attrs?.size}`}>
-          {children && parse(children)}
+          {children && parse(children, options)}
         </span>
       );
       break;
     default:
       // 动态渲染标签
-      fragment = <TagName {...attrs}>{children && parse(children, options)}</TagName>;
+      fragment = (
+        <TagName {...attrs}>{children && parse(children, options)}</TagName>
+      );
   }
   return fragment;
 }

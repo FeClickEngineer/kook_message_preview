@@ -17,11 +17,11 @@ function MessagePreview(props) {
     customMetUserRender,
     customRoleRender,
     customChannelRender,
-    customVideoEvents,
-    customAudioEvents,
-    customFileEvents,
-    customButtonEvents,
-    customImageEvents,
+    customVideoEvents = {},
+    customAudioEvents = {},
+    customFileEvents = {},
+    customButtonEvents = {},
+    customImageEvents = {},
   } = props;
 
   const status = useExternal(external, {

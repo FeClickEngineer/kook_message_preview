@@ -12,6 +12,8 @@ function MessagePreview(props) {
     content = [],
     theme = 'light',
     external = '',
+    hideMoreHeight = 400,
+    collapsed = true,
     customMetUserRender,
     customRoleRender,
     customChannelRender,
@@ -37,6 +39,8 @@ function MessagePreview(props) {
             customMetUserRender,
             customRoleRender,
             customChannelRender,
+            hideMoreHeight,
+            collapsed,
           },
         )}
       </div>

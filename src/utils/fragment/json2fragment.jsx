@@ -209,7 +209,14 @@ export function json2fragment(cardList, options) {
     const { modules = [], color, size, theme } = card;
 
     return (
-      <Card color={color} theme={theme} size={size} key={i}>
+      <Card
+        color={color}
+        theme={theme}
+        size={size}
+        key={i}
+        hideMoreHeight={options.hideMoreHeight}
+        collapsed={options.collapsed}
+      >
         {parseModuleList(modules, size, options)}
       </Card>
     );

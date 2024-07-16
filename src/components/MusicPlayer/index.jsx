@@ -12,7 +12,12 @@ function MusicPlayer(props) {
     progress: 0,
   });
 
-  const onDefaultClickPlay = (audio, errorState) => {
+  const onClickPlayInternal = (audio, errorState) => {
+    if (typeof onClickPlay === 'function') {
+      onClickPlay(props);
+      return;
+    }
+
     if (errorState) {
       console.error('music play error:', errorState);
       return;
@@ -37,11 +42,7 @@ function MusicPlayer(props) {
       download={download}
       status={state.status}
       progress={state.progress}
-      onClickPlay={
-        typeof onClickPlay === 'function'
-          ? () => onClickPlay(props)
-          : onDefaultClickPlay
-      }
+      onClickPlay={onClickPlayInternal}
       onClickDown={
         typeof onClickDown === 'function'
           ? () => onClickDown(props)

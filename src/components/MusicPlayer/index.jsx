@@ -15,7 +15,6 @@ function MusicPlayer(props) {
   const onClickPlayInternal = (audio, errorState) => {
     if (typeof onClickPlay === 'function') {
       onClickPlay(props);
-      return;
     }
 
     if (errorState) {

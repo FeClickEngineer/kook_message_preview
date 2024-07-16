@@ -39,12 +39,12 @@ function MusicPlayer(props) {
       progress={state.progress}
       onClickPlay={
         typeof onClickPlay === 'function'
-          ? () => onClickPlay(src)
+          ? () => onClickPlay(props)
           : onDefaultClickPlay
       }
       onClickDown={
         typeof onClickDown === 'function'
-          ? () => onClickDown(src)
+          ? () => onClickDown(props)
           : downloadMusic
       }
       onClickCancel={onClickCancel}

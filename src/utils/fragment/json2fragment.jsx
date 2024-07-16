@@ -88,9 +88,10 @@ function parseModule(module, cardSize, options) {
         <Container
           size={cardSize}
           elements={module.elements}
-          onClickElement={(module) =>
-            options.customImageEvents?.onClick(module)
-          }
+          onClickElement={(module) => {
+            if (module.type === 'image' && options.customImageEvents?.onClick)
+              options.customImageEvents.onClick(module);
+          }}
         />
       );
       break;
@@ -98,7 +99,10 @@ function parseModule(module, cardSize, options) {
       fragment = (
         <Image.Group
           list={elements}
-          onClick={(module) => options.customImageEvents?.onClick(module)}
+          onClick={(module) => {
+            if (options.customImageEvents?.onClick)
+              options.customImageEvents?.onClick(module);
+          }}
         />
       );
       break;
@@ -116,7 +120,10 @@ function parseModule(module, cardSize, options) {
           block={cardSize === 'sm'}
           type={module.theme}
           color={module.color}
-          onClick={() => options.customButtonEvents?.onClick(module)}
+          onClick={() => {
+            if (options.customButtonEvents?.onClick)
+              options.customButtonEvents?.onClick(module);
+          }}
         >
           {childContent}
         </Button>
@@ -137,7 +144,7 @@ function parseModule(module, cardSize, options) {
           outside={module.external}
           fileName={module.title}
           fileSize={module.size}
-          onClickDown={options.customFileEvents?.onDownload}
+          onClickDown={options.customFileEvents?.onDownload ?? undefined}
         />
       );
       break;

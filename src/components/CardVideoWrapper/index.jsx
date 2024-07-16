@@ -30,9 +30,15 @@ function CardVideoWrapper(props) {
       fileSize={fileSize}
       duration={duration}
       poster={cover}
-      onClickPlay={(props) => onClickPlay(props) ?? {}}
+      onClickPlay={
+        typeof onClickPlay === 'function' ? () => onClickPlay(props) : undefined
+      }
       status={'done'}
-      onClickDown={(props) => onClickDown(props) ?? downloadMusic()}
+      onClickDown={
+        typeof onClickDown === 'function'
+          ? () => onClickDown(props)
+          : downloadMusic
+      }
     />
   );
 }

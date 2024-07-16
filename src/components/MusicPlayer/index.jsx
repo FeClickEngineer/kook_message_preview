@@ -37,8 +37,16 @@ function MusicPlayer(props) {
       download={download}
       status={state.status}
       progress={state.progress}
-      onClickPlay={(src) => onClickPlay(src) ?? onDefaultClickPlay}
-      onClickDown={(src) => onClickDown(src) ?? downloadMusic}
+      onClickPlay={
+        typeof onClickPlay === 'function'
+          ? () => onClickPlay(src)
+          : onDefaultClickPlay
+      }
+      onClickDown={
+        typeof onClickDown === 'function'
+          ? () => onClickDown(src)
+          : downloadMusic
+      }
       onClickCancel={onClickCancel}
       audio={audio}
     />

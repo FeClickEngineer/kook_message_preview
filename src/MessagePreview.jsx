@@ -20,8 +20,8 @@ function MessagePreview(props) {
     customVideoEvents = {},
     customAudioEvents = {},
     customFileEvents = {},
-    customButtonEvents = {},
-    customImageEvents = {},
+    customButtonClick,
+    customImageClick,
   } = props;
 
   const status = useExternal(external, {
@@ -47,8 +47,8 @@ function MessagePreview(props) {
             customVideoEvents,
             customAudioEvents,
             customFileEvents,
-            customButtonEvents,
-            customImageEvents,
+            customButtonClick,
+            customImageClick,
             hideMoreHeight,
             collapsed,
           },

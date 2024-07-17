@@ -1,5 +1,7 @@
 # kook消息预览组件 @kookapp/kook-message-preview
 
+# 已迁移至 https://github.com/kaiheila/kook_message_preview
+
 ## 开发者调试
 
 ```bash
@@ -17,11 +19,11 @@ $ pnpm run docs_build
 ```
 
 ## 项目结构介绍
+
 - docs 组件文档
 - src 组件源码
 - .dumirc.ts dumi配置文件
 - .fatherrc.ts father打包组件配置文件
-
 
 ## LICENSE
 

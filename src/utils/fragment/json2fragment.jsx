@@ -84,18 +84,28 @@ function parseModule(module, cardSize, options) {
       );
       break;
     case 'container':
-      fragment = <Container size={cardSize} elements={module.elements} />;
+      fragment = (
+        <Container
+          size={cardSize}
+          elements={module.elements}
+          onClickElement={(module) => {
+            if (
+              module.type === 'image' &&
+              typeof options.customImageClick === 'function'
+            )
+              options.customImageClick(module);
+          }}
+        />
+      );
       break;
     case 'image-group':
-      fragment = <Image.Group list={elements} />;
-      break;
-    case 'image':
       fragment = (
-        <Image
-          src={module.src}
-          alt={module.alt}
-          size={module.size}
-          radius={module.circle}
+        <Image.Group
+          list={elements}
+          onClick={(module) => {
+            if (typeof options.customImageClick === 'function')
+              options.customImageClick(module);
+          }}
         />
       );
       break;
@@ -113,6 +123,10 @@ function parseModule(module, cardSize, options) {
           block={cardSize === 'sm'}
           type={module.theme}
           color={module.color}
+          onClick={() => {
+            if (typeof options.customButtonClick === 'function')
+              options.customButtonClick(module);
+          }}
         >
           {childContent}
         </Button>
@@ -133,6 +147,13 @@ function parseModule(module, cardSize, options) {
           outside={module.external}
           fileName={module.title}
           fileSize={module.size}
+          onClickDown={
+            options.customFileEvents?.onDownload
+              ? () => {
+                  options.customFileEvents.onDownload(module);
+                }
+              : undefined
+          }
         />
       );
       break;
@@ -146,6 +167,20 @@ function parseModule(module, cardSize, options) {
           fileSize={module.size}
           duration={module.duration}
           poster={module.cover}
+          onClickPlay={
+            typeof options?.customVideoEvents?.onPlay === 'function'
+              ? () => {
+                  options.customVideoEvents.onPlay(module);
+                }
+              : undefined
+          }
+          onClickDown={
+            typeof options?.customVideoEvents?.onDownload === 'function'
+              ? () => {
+                  options.customVideoEvents.onDownload(module);
+                }
+              : undefined
+          }
         />
       );
       break;
@@ -161,6 +196,20 @@ function parseModule(module, cardSize, options) {
           icon={module.cover}
           id={`${module?.src}${module?.title}`}
           canDownload={module.canDownload}
+          onClickPlay={
+            typeof options?.customAudioEvents?.onPlay === 'function'
+              ? () => {
+                  options.customAudioEvents.onPlay(module);
+                }
+              : undefined
+          }
+          onClickDown={
+            typeof options?.customAudioEvents?.onDownload === 'function'
+              ? () => {
+                  options.customAudioEvents.onDownload(module);
+                }
+              : undefined
+          }
         />
       );
       break;

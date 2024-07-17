@@ -3,7 +3,7 @@ import { Music } from '@kaiheila/kui-lib';
 
 let audio = null;
 function MusicPlayer(props) {
-  const { canDownload, src } = props;
+  const { canDownload, src, onClickPlay, onClickDown } = props;
 
   const download = canDownload !== false;
 
@@ -12,7 +12,11 @@ function MusicPlayer(props) {
     progress: 0,
   });
 
-  const on_click_play = (audio, errorState) => {
+  const onClickPlayInternal = (audio, errorState) => {
+    if (typeof onClickPlay === 'function') {
+      onClickPlay(props);
+    }
+
     if (errorState) {
       console.error('music play error:', errorState);
       return;
@@ -20,7 +24,7 @@ function MusicPlayer(props) {
     audio.play();
   };
 
-  const download_music = () => {
+  const downloadMusic = () => {
     const a = document.createElement('a');
     a.href = src;
     a.setAttribute('target', '_blank');
@@ -29,7 +33,7 @@ function MusicPlayer(props) {
   };
 
   // 不支持
-  const on_click_cancel = () => {};
+  const onClickCancel = () => {};
 
   return (
     <Music
@@ -37,9 +41,13 @@ function MusicPlayer(props) {
       download={download}
       status={state.status}
       progress={state.progress}
-      onClickPlay={on_click_play}
-      onClickDown={download_music}
-      onClickCancel={on_click_cancel}
+      onClickPlay={onClickPlayInternal}
+      onClickDown={
+        typeof onClickDown === 'function'
+          ? () => onClickDown(props)
+          : downloadMusic
+      }
+      onClickCancel={onClickCancel}
       audio={audio}
     />
   );
